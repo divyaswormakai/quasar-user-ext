@@ -3,9 +3,13 @@
     <q-form>
       <div class="text-h6">Answer your security question</div>
       <!-- Question -->
-      <q-select filled v-model="question" :options="options" label="Security Question" />
+      <div class="question-answer">
+        <q-select filled v-model="question" :options="options" label="Security Question" />
+      </div>
       <!-- Answer -->
-      <q-input filled outlined clearable v-model="answer" label="Your answer"></q-input>
+      <div class="question-answer">
+        <q-input filled outlined clearable v-model="answer" label="Your answer"></q-input>
+      </div>
       <div class="btns">
         <q-btn
           label="Confirm"
@@ -44,5 +48,8 @@ export default {
   padding-top: 10px;
   display: flex;
   flex-direction: column;
+}
+.question-answer {
+  width: 100%;
 }
 </style>
