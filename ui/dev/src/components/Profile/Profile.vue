@@ -92,65 +92,28 @@
           </q-input>
         </div>
 
-        <!-- New password -->
-        <div class="column" v-show="oldPassword.password.length>0">
-          <label>New Password</label>
-          <q-input
-            :type="newPassword.isPassword ? 'password' : 'text'"
-            filled
-            outlined
-            v-model="newPassword.password"
-            label="Password *"
-          >
-            <template v-slot:prepend>
-              <q-icon name="vpn_key" />
-            </template>
-            <template v-slot:append>
-              <q-icon
-                :name="newPassword.isPassword ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="newPassword.isPassword = !newPassword.isPassword"
-              />
-            </template>
-          </q-input>
-
-          <label>Confirm New Password</label>
-          <q-input
-            :type="confirmNewPassword.isPassword ? 'password' : 'text'"
-            filled
-            outlined
-            v-model="confirmNewPassword.password"
-            label="Password *"
-          >
-            <template v-slot:prepend>
-              <q-icon name="vpn_key" />
-            </template>
-            <template v-slot:append>
-              <q-icon
-                :name="confirmNewPassword.isPassword ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="confirmNewPassword.isPassword = !confirmNewPassword.isPassword"
-              />
-            </template>
-          </q-input>
+        <!-- New password and confirm password -->
+        <div class="column">
+          <confirm-password-comp
+            :status="isOk"
+            :showWarning="showWarning"
+            @changeStatus="isOk=$event"
+            v-show="oldPassword.password.length>0"
+          ></confirm-password-comp>
         </div>
 
         <!-- Change password status -->
-        <div class="column btns" v-show="oldPassword.password.length>0 ">
-          <div v-show="newPassword.password==confirmNewPassword.password">
-            <q-btn
-              rounded
-              label="Save"
-              type="submit"
-              color="primary"
-              icon-right="save"
-              size="18px"
-              @click="savePassword"
-            />
-          </div>
-          <div v-show="newPassword.password!=confirmNewPassword.password">
-            <q-banner inline-actions class="text-white bg-red">The passwords don't match.</q-banner>
-          </div>
+        <div class="column btns" v-show="oldPassword.password.length>0">
+          <q-btn
+            rounded
+            label="Save"
+            type="submit"
+            color="primary"
+            icon-right="save"
+            size="18px"
+            :disable="isOk"
+            @click="savePassword"
+          />
         </div>
       </div>
     </div>
@@ -174,20 +137,17 @@ export default {
         password: "",
         isPassword: true,
       },
-      newPassword: {
-        password: "",
-        isPassword: true,
-      },
-      confirmNewPassword: {
-        password: "",
-        isPassword: true,
-      },
+      isOk: false,
+      showWarning: true,
     };
   },
   methods: {
     savePassword() {
       console.log("Password");
     },
+  },
+  components: {
+    confirmPasswordComp: () => import("../shared/ConfirmPasswordComponent.vue"),
   },
 };
 </script>
@@ -234,7 +194,7 @@ p {
 
 .user-password-change {
   width: 100%;
-  min-height: 30vh;
+  min-height: 50vh;
   .row {
     display: flex;
     flex-direction: row;

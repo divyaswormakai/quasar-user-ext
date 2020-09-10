@@ -6,58 +6,11 @@
       </q-card-section>
 
       <q-card-section class="content">
-        <!-- Set new password -->
-        <div>
-          <q-input
-            :type="newPassword.isPassword ? 'password' : 'text'"
-            filled
-            outlined
-            v-model="newPassword.password"
-            label="Password *"
-          >
-            <template v-slot:prepend>
-              <q-icon name="vpn_key" />
-            </template>
-            <template v-slot:append>
-              <q-icon
-                :name="newPassword.isPassword ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="newPassword.isPassword = !newPassword.isPassword"
-              />
-            </template>
-          </q-input>
-        </div>
-
-        <!-- Confirm password -->
-        <div>
-          <q-input
-            :type="confirmNewPassword.isPassword ? 'password' : 'text'"
-            filled
-            outlined
-            v-model="confirmNewPassword.password"
-            label="Confirm Password *"
-          >
-            <template v-slot:prepend>
-              <q-icon name="vpn_key" />
-            </template>
-            <template v-slot:append>
-              <q-icon
-                :name="confirmNewPassword.isPassword ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="confirmNewPassword.isPassword = !confirmNewPassword.isPassword"
-              />
-            </template>
-          </q-input>
-        </div>
-
-        <!-- Warning -->
-        <div>
-          <q-banner
-            inline-actions
-            class="text-white bg-red"
-            v-show="newPassword.password!=confirmNewPassword.password"
-          >Your password don't match</q-banner>
-        </div>
+        <confirm-password-comp
+          :status="isOk"
+          :showWarning="showWarning"
+          @changeStatus="isOk=$event"
+        ></confirm-password-comp>
         <!-- Buttons -->
         <div class="btns">
           <q-btn
@@ -65,6 +18,7 @@
             type="submit"
             color="primary"
             size="18px"
+            :disable="isOk"
             @click.native.prevent="submitForm"
           />
         </div>
@@ -79,20 +33,17 @@
 export default {
   data() {
     return {
-      newPassword: {
-        password: "",
-        isPassword: true,
-      },
-      confirmNewPassword: {
-        password: "",
-        isPassword: true,
-      },
+      isOk: false,
+      showWarning: true,
     };
   },
   methods: {
     savePassword() {
       console.log("saving new password");
     },
+  },
+  components: {
+    confirmPasswordComp: () => import("../shared/ConfirmPasswordComponent.vue"),
   },
 };
 </script>

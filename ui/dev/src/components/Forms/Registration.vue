@@ -120,56 +120,19 @@
               <q-icon name="email" />
             </template>
           </q-input>
-          <!-- Password -->
-          <q-input
-            :type="isPassword ? 'password' : 'text'"
-            filled
-            outlined
-            v-model="password"
-            label="Password *"
-            color="secondary"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Please type your password']"
-          >
-            <template v-slot:prepend>
-              <q-icon name="vpn_key" />
-            </template>
-            <template v-slot:append>
-              <q-icon
-                :name="isPassword ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="isPassword = !isPassword"
-              />
-            </template>
-          </q-input>
-          <!-- Confirm Password -->
-          <q-input
-            :type="isPassword ? 'password' : 'text'"
-            filled
-            outlined
-            v-model="confirmPassword"
-            label="Confirm Password *"
-            color="secondary"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Confirm your password']"
-          >
-            <template v-slot:prepend>
-              <q-icon name="vpn_key" />
-            </template>
-            <template v-slot:append>
-              <q-icon
-                :name="isPassword ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="isPassword = !isPassword"
-              />
-            </template>
-          </q-input>
+          <!-- Password and save passwords -->
+          <confirm-password-comp
+            :status="isOk"
+            :showWarning="showWarning"
+            @changeStatus="isOk=$event"
+          ></confirm-password-comp>
           <!-- Buttons -->
           <div class="btns">
             <q-btn
               label="Sign Up"
               type="submit"
               color="secondary"
+              :disable="isOk"
               @click.native.prevent="submitForm"
               icon="how_to_reg"
               size="18px"
@@ -194,18 +157,20 @@
 export default {
   data() {
     return {
+      // General info data for the user
       fname: "",
       lname: "",
       email: "",
-      password: "",
-      confirmPassword: "",
       age: 0,
       gender: "",
       country: "",
       contact: 0,
       genderOptions: ["Male", "Female", "Others"],
       countryOptions: ["Nepal", "India", "China", "Bhutan", "Pakistan"],
-      isPassword: true,
+
+      //For the password setting component
+      isOk: false,
+      showWarning: false,
     };
   },
   methods: {
@@ -216,6 +181,9 @@ export default {
       this.email = "";
       this.password = "";
     },
+  },
+  components: {
+    confirmPasswordComp: () => import("../shared/ConfirmPasswordComponent.vue"),
   },
 };
 </script>
