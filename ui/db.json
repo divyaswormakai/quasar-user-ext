@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "fname": "Divyaswor Makai",
+      "lname": "Shrestha",
+      "age": 22,
+      "gender": "Male",
+      "country": "Nepal",
+      "contact": "9860656332",
+      "email": "makaidivya@gmail.com",
+      "password": "12345678",
+      "id": 1
+    },
+    {
+      "fname": "asdfasd",
+      "lname": "asdfasdf",
+      "email": "mamskh@akaks.cosd",
+      "age": "012",
+      "gender": "Male",
+      "country": "Nepal",
+      "contact": "0asdfasdfasdf",
+      "password": "12345678",
+      "id": 3771343
+    }
+  ]
+}

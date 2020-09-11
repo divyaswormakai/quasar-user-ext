@@ -1,5 +1,7 @@
 <template>
   <div class="registration-form">
+    <error-banner :errorMsg="errorMessage" @clearError="errorMessage=$event"></error-banner>
+
     <q-card bordered class="card">
       <q-card-section class="bg-secondary text-white">
         <div class="text-h5">Sign Up in the portal</div>
@@ -8,7 +10,7 @@
       <q-separator inset />
 
       <q-card-section>
-        <q-form class="q-gutter-md">
+        <q-form class="q-gutter-md" ref="registrationForm">
           <!-- First row -->
           <div class="form-row">
             <!-- First Name -->
@@ -54,7 +56,7 @@
               color="secondary"
               hint="Age: 18"
               lazy-rules
-              :rules="[ emptyRule]"
+              :rules="[ emptyRule,ageRule]"
             />
             <!-- Gender -->
             <q-select
@@ -97,7 +99,7 @@
             color="secondary"
             hint="Contact Number: 986543210"
             lazy-rules
-            :rules="[ emptyRule]"
+            :rules="[ emptyRule, contactRule]"
           >
             <template v-slot:prepend>
               <q-icon name="call" />
@@ -125,6 +127,7 @@
             :status="isOk"
             :showWarning="showWarning"
             @changeStatus="isOk=$event"
+            @getPassword="password=$event"
           ></confirm-password-comp>
           <!-- Buttons -->
           <div class="btns">
@@ -154,7 +157,14 @@
 </template>
 
 <script>
-import { emailRule, emptyRule, passwordRule } from "./../utils/rules";
+import {
+  emailRule,
+  emptyRule,
+  passwordRule,
+  ageRule,
+  contactRule,
+} from "./../utils/rules";
+import userService from "../services/userService";
 
 export default {
   data() {
@@ -167,6 +177,9 @@ export default {
       gender: "",
       country: "",
       contact: 0,
+      password: "",
+
+      // options
       genderOptions: ["Male", "Female", "Others"],
       countryOptions: ["Nepal", "India", "China", "Bhutan", "Pakistan"],
 
@@ -178,11 +191,38 @@ export default {
       emailRule,
       emptyRule,
       passwordRule,
+      ageRule,
+      contactRule,
+
+      //error
+      errorMessage: "",
     };
   },
   methods: {
-    submitForm() {
-      console.log("Submit");
+    async submitForm() {
+      let validation = await this.$refs.registrationForm.validate();
+      if (validation) {
+        let userDetails = {
+          fname: this.fname,
+          lname: this.lname,
+          email: this.email,
+          age: this.age,
+          gender: this.gender,
+          country: this.country,
+          contact: this.contact,
+          password: this.password,
+        };
+        let user = await userService.userRegister(userDetails);
+        if (user.error) {
+          console.log(user.error);
+          this.errorMessage = user.error;
+        } else {
+          //save data to localStorage
+          localStorage.setItem("user-ext-user-id", user.id);
+          //redirecto to new page
+          this.$router.push("/profile");
+        }
+      }
     },
     resetDetails() {
       this.email = "";
@@ -190,6 +230,8 @@ export default {
     },
   },
   components: {
+    errorBanner: () => import("../components/shared/ErrorBanner.vue"),
+
     confirmPasswordComp: () =>
       import("../components/shared/ConfirmPasswordComponent.vue"),
   },

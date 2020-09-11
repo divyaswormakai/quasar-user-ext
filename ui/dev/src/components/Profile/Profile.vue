@@ -12,7 +12,7 @@
           <div class="row-elem">
             <label for="name">Full Name</label>
             <p>
-              <b>{{userDetails.name}}</b>
+              <b>{{userDetails.fname+" "+userDetails.lname}}</b>
             </p>
           </div>
         </div>
@@ -121,16 +121,26 @@
 </template>
 
 <script>
+import userService from '../../services/userService'
 export default {
+  async beforeMount(){
+    let id = localStorage.getItem('user-ext-user-id');
+    console.log(id);
+    let user = await userService.userProfile(id);
+    console.log(user)
+    delete user.password;
+    this.userDetails = user;
+  },
   data() {
     return {
       userDetails: {
-        name: "Divyaswor Makai",
-        country: "Nepal",
-        age: 22,
-        gender: "Male",
-        email: "makaidivya@gmail.com",
-        contact: "+977-9860656332",
+        fname: "",
+        lname:"",
+        country: "",
+        age: 0,
+        gender: "",
+        email: "",
+        contact: "",
       },
       imageSrc: "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
       oldPassword: {

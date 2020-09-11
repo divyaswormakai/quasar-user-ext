@@ -88,6 +88,7 @@ export default {
           ? false
           : true;
       this.$emit("changeStatus", toShow);
+      this.$emit("getPassword",this.newPassword.password)
       return toShow;
     },
   },

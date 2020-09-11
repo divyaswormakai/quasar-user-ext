@@ -1,5 +1,6 @@
 <template>
   <div class="login-form">
+    <error-banner :errorMsg="errorMessage" @clearError="errorMessage=$event"></error-banner>
     <q-card bordered class="form">
       <q-card-section class="bg-primary text-white">
         <div class="text-h5">Sign In to the portal</div>
@@ -8,7 +9,7 @@
       <q-separator inset />
 
       <q-card-section>
-        <q-form class="q-gutter-md">
+        <q-form class="q-gutter-md" ref="loginForm">
           <!-- Email -->
           <q-input
             filled
@@ -78,6 +79,7 @@
 
 <script>
 import { emailRule, emptyRule, passwordRule } from "./../utils/rules";
+import userService from "../services/userService";
 export default {
   data() {
     return {
@@ -87,14 +89,25 @@ export default {
       emailRule,
       emptyRule,
       passwordRule,
+
+      errorMessage: "",
     };
   },
   methods: {
-    submitForm() {
-      console.log("submit form");
-      // Redirect to a mockup route
-      // json server for testing purposes
-      // return string and save in local storage
+    async submitForm() {
+      let validation = await this.$refs.loginForm.validate();
+      if (validation) {
+        let user = await userService.userLogin(this.email, this.password);
+        if (user.error) {
+          console.log(user.error);
+          this.errorMessage = user.error;
+        } else {
+          //save data to localStorage
+          localStorage.setItem("user-ext-user-id", user.id);
+          //redirecto to new page
+          this.$router.push("/profile");
+        }
+      }
     },
     resetDetails() {
       console.log("ASDFASD");
@@ -102,6 +115,9 @@ export default {
       this.password = "";
       this.isPassword = true;
     },
+  },
+  components: {
+    errorBanner: () => import("../components/shared/ErrorBanner.vue"),
   },
 };
 </script>
