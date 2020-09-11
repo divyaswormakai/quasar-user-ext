@@ -1,6 +1,6 @@
 <template>
   <div class="registration-form">
-    <q-card bordered>
+    <q-card bordered class="card">
       <q-card-section class="bg-secondary text-white">
         <div class="text-h5">Sign Up in the portal</div>
       </q-card-section>
@@ -22,7 +22,7 @@
               color="secondary"
               hint="First Name: John"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || 'First name is required']"
+              :rules="[emptyRule]"
             />
             <!-- Last Name -->
             <q-input
@@ -36,7 +36,7 @@
               color="secondary"
               hint="Last Name:Doe"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || 'Last name is required']"
+              :rules="[emptyRule]"
             />
           </div>
 
@@ -54,7 +54,7 @@
               color="secondary"
               hint="Age: 18"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || 'Age is required']"
+              :rules="[ emptyRule]"
             />
             <!-- Gender -->
             <q-select
@@ -68,7 +68,7 @@
               hint="Gender: Male/Female/Others"
               :options="genderOptions"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || 'Gender is required']"
+              :rules="[ emptyRule]"
             />
             <!-- Country -->
             <q-select
@@ -83,7 +83,7 @@
               hint="Country: Nepal"
               :options="countryOptions"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || 'Country is required']"
+              :rules="[emptyRule]"
             />
           </div>
           <!-- Contact -->
@@ -97,7 +97,7 @@
             color="secondary"
             hint="Contact Number: 986543210"
             lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Please enter contact details']"
+            :rules="[ emptyRule]"
           >
             <template v-slot:prepend>
               <q-icon name="call" />
@@ -114,7 +114,7 @@
             color="secondary"
             hint="For example: johndoe@gmail.com"
             lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Please type something']"
+            :rules="[emptyRule,emailRule]"
           >
             <template v-slot:prepend>
               <q-icon name="email" />
@@ -154,6 +154,8 @@
 </template>
 
 <script>
+import { emailRule, emptyRule, passwordRule } from "./../utils/rules";
+
 export default {
   data() {
     return {
@@ -171,6 +173,11 @@ export default {
       //For the password setting component
       isOk: false,
       showWarning: false,
+
+      //rules
+      emailRule,
+      emptyRule,
+      passwordRule,
     };
   },
   methods: {
@@ -183,28 +190,35 @@ export default {
     },
   },
   components: {
-    confirmPasswordComp: () => import("../shared/ConfirmPasswordComponent.vue"),
+    confirmPasswordComp: () =>
+      import("../components/shared/ConfirmPasswordComponent.vue"),
   },
 };
 </script>
 
 <style lang="scss">
 .registration-form {
-  background: red;
-  width: 60%;
-}
-.form-row {
-  box-sizing: content-box;
-  width: 100%;
   display: flex;
-  justify-content: space-around;
-  .form-row-elem-2 {
-    width: 50%;
-    margin-right: 15px;
-  }
-  .form-row-elem-3 {
-    width: 30%;
-    margin-right: 15px;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  .card {
+    min-width: 40%;
+    .form-row {
+      box-sizing: content-box;
+
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      .form-row-elem-2 {
+        width: 50%;
+        margin-right: 15px;
+      }
+      .form-row-elem-3 {
+        width: 30%;
+        margin-right: 15px;
+      }
+    }
   }
 }
 .btns {

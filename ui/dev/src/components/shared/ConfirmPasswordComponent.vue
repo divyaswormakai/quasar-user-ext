@@ -8,6 +8,8 @@
         outlined
         v-model="newPassword.password"
         label="Password *"
+        lazy-rules
+        :rules="[passwordRule]"
       >
         <template v-slot:prepend>
           <q-icon name="vpn_key" />
@@ -30,6 +32,8 @@
         outlined
         v-model="confirmNewPassword.password"
         label="Confirm Password *"
+        lazy-rules
+        :rules="[passwordRule]"
       >
         <template v-slot:prepend>
           <q-icon name="vpn_key" />
@@ -56,6 +60,7 @@
 </template>
 
 <script>
+import { passwordRule } from "../../utils/rules";
 export default {
   props: {
     status: { type: Boolean },
@@ -71,6 +76,8 @@ export default {
         password: "",
         isPassword: true,
       },
+      // rules
+      passwordRule,
     };
   },
   computed: {

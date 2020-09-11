@@ -1,6 +1,6 @@
 <template>
   <div class="login-form">
-    <q-card bordered>
+    <q-card bordered class="form">
       <q-card-section class="bg-primary text-white">
         <div class="text-h5">Sign In to the portal</div>
       </q-card-section>
@@ -19,7 +19,7 @@
             label="Email *"
             hint="For example: johndoe@gmail.com"
             lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Email can\'t be empty ']"
+            :rules="[emptyRule,emailRule]"
           >
             <template v-slot:prepend>
               <q-icon name="email" />
@@ -34,9 +34,7 @@
             v-model="password"
             label="Password *"
             lazy-rules
-            :rules="[
-          val => val !== null && val !== '' || 'Please type your password',
-        ]"
+            :rules="[passwordRule]"
           >
             <template v-slot:prepend>
               <q-icon name="vpn_key" />
@@ -79,17 +77,24 @@
 </template>
 
 <script>
+import { emailRule, emptyRule, passwordRule } from "./../utils/rules";
 export default {
   data() {
     return {
       email: "",
       password: "",
       isPassword: true,
+      emailRule,
+      emptyRule,
+      passwordRule,
     };
   },
   methods: {
     submitForm() {
       console.log("submit form");
+      // Redirect to a mockup route
+      // json server for testing purposes
+      // return string and save in local storage
     },
     resetDetails() {
       console.log("ASDFASD");
@@ -103,8 +108,14 @@ export default {
 
 <style lang="scss">
 .login-form {
-  background: red;
-  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  margin: auto;
+  .form {
+    min-width: 30%;
+  }
 }
 .btns {
   display: flex;
