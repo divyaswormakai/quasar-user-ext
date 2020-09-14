@@ -2,6 +2,11 @@
   <div class="set-password">
     <q-card class="card">
       <q-card-section class="bg-primary text-white title">
+        <div>
+          <!-- Logo -->
+
+          <img :src="logoUrl" alt="logo" />
+        </div>
         <div class="text-h6">Set your new password</div>
       </q-card-section>
 
@@ -30,11 +35,14 @@
 </template>
 
 <script>
+import logo from "assets/rasello.png";
+
 export default {
   data() {
     return {
       isOk: false,
       showWarning: true,
+      logoUrl: logo,
     };
   },
   methods: {
@@ -43,7 +51,8 @@ export default {
     },
   },
   components: {
-    confirmPasswordComp: () => import("../shared/ConfirmPasswordComponent.vue"),
+    confirmPasswordComp: () =>
+      import("components/shared/ConfirmPasswordComponent.vue"),
   },
 };
 </script>
@@ -62,7 +71,13 @@ export default {
     .title {
       display: flex;
       align-items: center;
-      width: 50%;
+      flex-direction: column;
+      justify-content: center;
+      width: 60%;
+      img {
+        height: 50px;
+        width: 50px;
+      }
     }
     .content {
       padding: 0px;

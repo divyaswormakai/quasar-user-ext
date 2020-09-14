@@ -2,6 +2,11 @@
   <div class="account-retrieve">
     <q-card class="card">
       <q-card-section class="bg-primary text-white title">
+        <div>
+          <!-- Logo -->
+
+          <img :src="logoUrl" alt="logo" />
+        </div>
         <div class="text-h6">Retrieve your password</div>
       </q-card-section>
 
@@ -15,10 +20,13 @@
 </template>
 
 <script>
+import logo from "assets/rasello.png";
+
 export default {
   data() {
     return {
       mode: "email",
+      logoUrl: logo,
     };
   },
   methods: {
@@ -27,9 +35,8 @@ export default {
     },
   },
   components: {
-    RetrieveEmail: () => import("../components/AccountRetrieve/Email.vue"),
-    RetrieveQuestion: () =>
-      import("../components/AccountRetrieve/Question.vue"),
+    RetrieveEmail: () => import("components/AccountRetrieve/Email.vue"),
+    RetrieveQuestion: () => import("components/AccountRetrieve/Question.vue"),
   },
 };
 </script>
@@ -48,6 +55,12 @@ export default {
     .title {
       display: flex;
       align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      img {
+        height: 50px;
+        width: 50px;
+      }
     }
   }
   .content {

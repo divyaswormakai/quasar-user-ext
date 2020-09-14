@@ -4,8 +4,7 @@
 <script>
 export default {
   components: {
-    setPassword: () =>
-      import("../components/AccountRetrieve/SetNewPassword.vue"),
+    setPassword: () => import("components/AccountRetrieve/SetNewPassword.vue"),
   },
 };
 </script>

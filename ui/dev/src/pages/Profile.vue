@@ -5,7 +5,7 @@
 <script>
 export default {
   components: {
-    userProfile: () => import("../components/Profile/Profile.vue"),
+    userProfile: () => import("components/Profile/Profile.vue"),
   },
 };
 </script>

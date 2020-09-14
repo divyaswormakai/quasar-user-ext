@@ -121,13 +121,13 @@
 </template>
 
 <script>
-import userService from '../../services/userService'
+import userService from "src/services/userService";
 export default {
-  async beforeMount(){
-    let id = localStorage.getItem('user-ext-user-id');
+  async beforeMount() {
+    let id = localStorage.getItem("user-ext-user-id");
     console.log(id);
     let user = await userService.userProfile(id);
-    console.log(user)
+    console.log(user);
     delete user.password;
     this.userDetails = user;
   },
@@ -135,7 +135,7 @@ export default {
     return {
       userDetails: {
         fname: "",
-        lname:"",
+        lname: "",
         country: "",
         age: 0,
         gender: "",
@@ -157,7 +157,8 @@ export default {
     },
   },
   components: {
-    confirmPasswordComp: () => import("../shared/ConfirmPasswordComponent.vue"),
+    confirmPasswordComp: () =>
+      import("components/shared/ConfirmPasswordComponent.vue"),
   },
 };
 </script>

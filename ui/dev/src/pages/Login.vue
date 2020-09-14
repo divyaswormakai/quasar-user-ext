@@ -9,9 +9,12 @@
       <q-separator inset />
 
       <q-card-section>
-        <q-form class="q-gutter-md" ref="loginForm">
+        <q-form class="q-gutter-md form-content" ref="loginForm">
+          <!-- Logo -->
+          <img :src="logo" alt="logo" />
           <!-- Email -->
           <q-input
+            class="input-field"
             filled
             outlined
             clearable
@@ -29,6 +32,7 @@
 
           <!-- Password -->
           <q-input
+            class="input-field"
             :type="isPassword ? 'password' : 'text'"
             filled
             outlined
@@ -78,8 +82,10 @@
 </template>
 
 <script>
-import { emailRule, emptyRule, passwordRule } from "./../utils/rules";
-import userService from "../services/userService";
+import { emailRule, emptyRule, passwordRule } from "src/utils/rules";
+import userService from "src/services/userService";
+import logo from "assets/rasello.png";
+
 export default {
   data() {
     return {
@@ -117,7 +123,7 @@ export default {
     },
   },
   components: {
-    errorBanner: () => import("../components/shared/ErrorBanner.vue"),
+    errorBanner: () => import("components/shared/ErrorBanner.vue"),
   },
 };
 </script>
@@ -138,6 +144,18 @@ export default {
   justify-content: center;
   q-btn {
     min-width: 300px;
+  }
+}
+.form-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  img {
+    height: 50px;
+    width: 50px;
+  }
+  .input-field {
+    width: 90%;
   }
 }
 </style>

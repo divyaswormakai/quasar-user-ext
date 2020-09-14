@@ -163,8 +163,8 @@ import {
   passwordRule,
   ageRule,
   contactRule,
-} from "./../utils/rules";
-import userService from "../services/userService";
+} from "src/utils/rules";
+import userService from "src/services/userService";
 
 export default {
   data() {
@@ -230,10 +230,10 @@ export default {
     },
   },
   components: {
-    errorBanner: () => import("../components/shared/ErrorBanner.vue"),
+    errorBanner: () => import("components/shared/ErrorBanner.vue"),
 
     confirmPasswordComp: () =>
-      import("../components/shared/ConfirmPasswordComponent.vue"),
+      import("components/shared/ConfirmPasswordComponent.vue"),
   },
 };
 </script>
