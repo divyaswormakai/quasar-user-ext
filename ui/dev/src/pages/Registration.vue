@@ -238,20 +238,19 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import '../css/quasar.mixin.scss';
+
 .registration-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter(center,center);
   min-height: 90vh;
   .card {
     min-width: 40%;
     .form-row {
       box-sizing: content-box;
-
       width: 100%;
-      display: flex;
-      justify-content: space-around;
+      @include flexCenter(space-around,center);
+
       .form-row-elem-2 {
         width: 50%;
         margin-right: 15px;
@@ -264,7 +263,6 @@ export default {
   }
 }
 .btns {
-  display: flex;
-  justify-content: center;
+  @include flexCenter(center,center);
 }
 </style>

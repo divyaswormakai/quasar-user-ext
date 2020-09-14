@@ -42,10 +42,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../css/quasar.mixin.scss';
+
 .account-retrieve {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter(center,center);
+
   height: 90vh;
   padding: 20px 50px;
   max-width: 100%;
@@ -53,10 +54,8 @@ export default {
     display: flex;
     min-width: 50%;
     .title {
-      display: flex;
-      align-items: center;
+      @include flexCenter(center,center);
       flex-direction: column;
-      justify-content: center;
       img {
         height: 50px;
         width: 50px;
@@ -64,8 +63,7 @@ export default {
     }
   }
   .content {
-    display: flex;
-    justify-content: center;
+    @include flexCenter(center,center);;
     flex-direction: column;
     height: 60vh;
     width: 30vw;

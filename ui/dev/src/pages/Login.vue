@@ -145,6 +145,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../css/quasar.mixin.scss';
+
 .icon {
   color: $primary;
 }
@@ -155,9 +157,8 @@ export default {
   height: 100%;
   width: 100%;
   z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+  @include flexCenter(center,center);
   .qr-code {
     display: flex;
     flex-direction: column;
@@ -166,9 +167,7 @@ export default {
 }
 
 .login-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter(center,center);
   flex-direction: row;
   height: 100vh;
   .left-content {
@@ -191,10 +190,8 @@ export default {
     .form {
       width: 80%;
       .row {
-        display: flex;
+        @include flexCenter(space-between,center);
         flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
         #checkbox {
           color: gray;
         }
@@ -219,9 +216,7 @@ export default {
       background: $primaryFaded;
       border-radius: 100% 0 0 0;
       div {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        @include flexCenter(space-between,center);
         flex-direction: column;
         padding: 20px 0px 0px 10px;
       }

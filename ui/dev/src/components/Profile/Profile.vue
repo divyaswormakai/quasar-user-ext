@@ -164,6 +164,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../css/quasar.mixin.scss';
+
 p {
   font-size: 20px;
 }
@@ -185,16 +187,13 @@ p {
     flex-direction: column;
     .user-details-row {
       padding: 10px 20px;
-      display: flex;
+      @include flexCenter(space-between,center);
       flex-direction: row;
-      justify-content: space-between;
     }
   }
   .user-pic {
     width: 60%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flexCenter(center,center);
     img {
       height: 300px;
       width: 300px;

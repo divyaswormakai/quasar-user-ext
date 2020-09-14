@@ -58,10 +58,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../css/quasar.mixin.scss';
+
 .set-password {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter(center,center);
   height: 90vh;
   padding: 20px 50px;
   max-width: 100%;
@@ -69,10 +69,8 @@ export default {
     display: flex;
     min-width: 60%;
     .title {
-      display: flex;
-      align-items: center;
+      @include flexCenter(center,center);
       flex-direction: column;
-      justify-content: center;
       width: 60%;
       img {
         height: 50px;
@@ -81,9 +79,7 @@ export default {
     }
     .content {
       padding: 0px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @include flexCenter(center,center);
       flex-direction: column;
       height: 60vh;
       width: 100%;
