@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <!-- <q-header elevated>
       <q-toolbar>
         <q-btn
           flat
@@ -16,24 +16,22 @@
 
         <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
-    </q-header>
+    </q-header>-->
 
-    <q-page-container>
-      <router-view />
-    </q-page-container>
+    <router-view />
   </q-layout>
 </template>
 
 <script>
-import { version } from 'ui' // "ui" is aliased in quasar.conf.js
+import { version } from "ui"; // "ui" is aliased in quasar.conf.js
 
 export default {
-  name: 'MyLayout',
+  name: "MyLayout",
 
-  data () {
+  data() {
     return {
-      version
-    }
-  }
-}
+      version,
+    };
+  },
+};
 </script>
