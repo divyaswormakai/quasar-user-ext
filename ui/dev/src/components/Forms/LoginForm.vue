@@ -1,11 +1,13 @@
 <template>
   <div class="login-form">
-    <error-banner :errorMsg="errorMessage" @clearError="errorMessage=$event"></error-banner>
     <div class="qr-code-content" v-show="showCode">
       <div class="qr-code">
         <img :src="qr" alt="qr-code" />
         <q-btn flat color="primary" label="Cancel" @click="showCode=false" />
       </div>
+    </div>
+    <div class="register-link">
+      <q-btn flat color="primary" label="Sign Up" @click="changeForm" icon-right="arrow_forward" />
     </div>
     <div class="left-content">
       <img :src="background" alt="Bg Img" id="bg" />
@@ -24,12 +26,10 @@
               <label class="label">Username</label>
               <q-input
                 class="input-field"
-                filled
                 outlined
                 clearable
                 type="email"
-                v-model="email"
-                label="Email *"
+                v-model="form.email"
                 hint="For example: johndoe@gmail.com"
                 lazy-rules
                 :rules="[emptyRule,emailRule]"
@@ -45,29 +45,27 @@
               <label class="label">Password</label>
               <q-input
                 class="input-field"
-                :type="isPassword ? 'password' : 'text'"
-                filled
+                :type="form.isPassword ? 'password' : 'text'"
                 outlined
-                v-model="password"
-                label="Password *"
+                v-model="form.password"
                 lazy-rules
                 :rules="[passwordRule]"
               >
                 <template v-slot:prepend>
-                  <q-icon name="vpn_key" class="icon" />
+                  <q-icon name="lock" class="icon" />
                 </template>
                 <template v-slot:append>
                   <q-icon
-                    :name="isPassword ? 'visibility_off' : 'visibility'"
+                    :name="form.isPassword ? 'visibility_off' : 'visibility'"
                     class="icon"
-                    @click="isPassword = !isPassword"
+                    @click="form.isPassword = !form.isPassword"
                   />
                 </template>
               </q-input>
             </div>
 
             <div class="row">
-              <q-checkbox v-model="rememberMe" :color="primary" id="checkbox">Remember Me</q-checkbox>
+              <q-checkbox v-model="form.rememberMe" color="primary" id="checkbox">Remember Me</q-checkbox>
               <a href="/account-retrieve">Forgot Password?</a>
             </div>
 
@@ -95,30 +93,24 @@
 </template>
 
 <script>
-import { emailRule, emptyRule, passwordRule } from "src/utils/rules";
 import userService from "src/services/userService";
-import logo from "assets/rasello.png";
-import background from "assets/login-bg.png";
-import qr from "assets/qrcode.png";
+import { assetsMixin, loginMixin } from "src/utils/mixin";
 
 export default {
+  mixins: [assetsMixin, loginMixin],
+  props: {
+    errorMessage: { type: String },
+  },
   data() {
     return {
-      email: "",
-      password: "",
-      isPassword: true,
-      rememberMe: false,
+      form: {
+        email: "",
+        password: "",
+        isPassword: true,
+        rememberMe: false,
+      },
 
-      emailRule,
-      emptyRule,
-      passwordRule,
-
-      errorMessage: "",
       showCode: false,
-
-      background,
-      logo,
-      qr,
     };
   },
   methods: {
@@ -128,7 +120,7 @@ export default {
         let user = await userService.userLogin(this.email, this.password);
         if (user.error) {
           console.log(user.error);
-          this.errorMessage = user.error;
+          this.$emit("setErrorMessage", user.error);
         } else {
           //save data to localStorage
           localStorage.setItem("user-ext-user-id", user.id);
@@ -137,18 +129,22 @@ export default {
         }
       }
     },
-  },
-  components: {
-    errorBanner: () => import("components/shared/ErrorBanner.vue"),
+    changeForm() {
+      this.$emit("changeActiveForm", "register");
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import '../css/quasar.mixin.scss';
+@import "../../css/quasar.mixin.scss";
 
 .icon {
   color: $primary;
+}
+
+.input-field {
+  margin-top: 10px;
 }
 
 .qr-code-content {
@@ -156,9 +152,9 @@ export default {
   background: rgba(53, 32, 32, 0.425);
   height: 100%;
   width: 100%;
-  z-index: 1;
+  z-index: 10;
 
-  @include flexCenter(center,center);
+  @include flexCenter(center, center);
   .qr-code {
     display: flex;
     flex-direction: column;
@@ -166,8 +162,14 @@ export default {
   }
 }
 
+.register-link {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 .login-form {
-  @include flexCenter(center,center);
+  @include flexCenter(center, center);
   flex-direction: row;
   height: 100vh;
   .left-content {
@@ -188,9 +190,9 @@ export default {
     align-items: center;
     width: 50%;
     .form {
-      width: 80%;
+      width: 70%;
       .row {
-        @include flexCenter(space-between,center);
+        @include flexCenter(space-between, center);
         flex-direction: row;
         #checkbox {
           color: gray;
@@ -216,7 +218,7 @@ export default {
       background: $primaryFaded;
       border-radius: 100% 0 0 0;
       div {
-        @include flexCenter(space-between,center);
+        @include flexCenter(space-between, center);
         flex-direction: column;
         padding: 20px 0px 0px 10px;
       }
@@ -224,5 +226,3 @@ export default {
   }
 }
 </style>
-
-

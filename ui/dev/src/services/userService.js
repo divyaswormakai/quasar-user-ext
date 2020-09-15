@@ -1,4 +1,5 @@
 import axios from 'axios';
+// Refine the base url
 axios.defaults.baseURL="http://localhost:3000/users"
 
 const getAllUsers = async()=>{
@@ -15,7 +16,7 @@ const userLogin = async(email,password)=>{
   try {
     console.log("Logging in user");
     const users = await getAllUsers();
-    console.log(users)
+    // console.log(users)
     let user = users.filter(user=>user.email==email);
     if(user.length>0){
       if(user[0].password === password){

@@ -11,8 +11,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-
 .label {
   color: rgb(70, 66, 66);
   font-weight: 500;

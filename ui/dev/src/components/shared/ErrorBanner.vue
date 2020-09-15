@@ -30,8 +30,10 @@ export default {
 <style lang="scss" scoped>
 .errorBanner {
   display: flex;
+  justify-content: center;
+  width: 100vw;
   position: fixed;
-  top: 50px;
+  top: 20px;
   z-index: 10;
 }
 </style>

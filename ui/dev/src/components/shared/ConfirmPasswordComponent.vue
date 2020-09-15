@@ -12,7 +12,7 @@
         :rules="[passwordRule]"
       >
         <template v-slot:prepend>
-          <q-icon name="vpn_key" />
+          <q-icon name="lock" color="primary" />
         </template>
         <template v-slot:append>
           <q-icon
@@ -36,7 +36,7 @@
         :rules="[passwordRule]"
       >
         <template v-slot:prepend>
-          <q-icon name="vpn_key" />
+          <q-icon name="lock" color="primary" />
         </template>
         <template v-slot:append>
           <q-icon
@@ -88,7 +88,7 @@ export default {
           ? false
           : true;
       this.$emit("changeStatus", toShow);
-      this.$emit("getPassword",this.newPassword.password)
+      this.$emit("getPassword", this.newPassword.password);
       return toShow;
     },
   },
