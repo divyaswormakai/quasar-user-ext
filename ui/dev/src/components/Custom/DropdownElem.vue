@@ -1,40 +1,46 @@
 <template>
   <div :class="'element'+ind">
     <div class="element">
-      {{ind+1}}
-      <q-input outlined v-model="name" label="Name" @blur="changeInput" class="input" />
-      <q-input outlined v-model="contact" label="Contact number" @blur="changeInput" class="input" />
-      <!-- <q-btn color="negative" flat label="Delete this" @click="deleteElem" /> -->
+      <q-select
+        filled
+        outlined
+        clearable
+        v-model="selectedValue"
+        color="primary"
+        hint="Select any option"
+        class="input"
+        @blur="changeInput"
+        lazy-rules
+        :rules="[emptyRule]"
+        :options="options"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import { emptyRule } from "src/utils/rules";
 export default {
   created() {
     console.log("Created");
   },
   props: {
+    options: { type: Array },
     dataField: { type: Object },
     ind: { type: Number },
   },
   data() {
     return {
-      name: "",
-      contact: "",
+      selectedValue: "",
+      emptyRule,
     };
   },
-
   methods: {
     changeInput() {
       this.$emit("setValues", {
-        data: { name: this.name, contact: this.contact },
+        data: { selected: this.selectedValue },
       });
     },
-    // deleteElem() {
-    //   console.log("Delet this");
-    //   this.$emit("deleteElem", this.ind);
-    // },
   },
 };
 </script>

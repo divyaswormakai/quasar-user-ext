@@ -2,14 +2,26 @@
   <div :class="'element'+ind">
     <div class="element">
       {{ind+1}}
-      <q-input outlined v-model="name" label="Name" @blur="changeInput" class="input" />
-      <q-input outlined v-model="contact" label="Contact number" @blur="changeInput" class="input" />
-      <!-- <q-btn color="negative" flat label="Delete this" @click="deleteElem" /> -->
+      <q-input
+        filled
+        outlined
+        clearable
+        type="number"
+        v-model="numberData"
+        label="Number Field"
+        color="primary"
+        hint="Enter number only"
+        class="input"
+        @blur="changeInput"
+        lazy-rules
+        :rules="[emptyRule]"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import { emptyRule } from "src/utils/rules";
 export default {
   created() {
     console.log("Created");
@@ -20,21 +32,16 @@ export default {
   },
   data() {
     return {
-      name: "",
-      contact: "",
+      numberData: 0,
+      emptyRule,
     };
   },
-
   methods: {
     changeInput() {
       this.$emit("setValues", {
-        data: { name: this.name, contact: this.contact },
+        data: { numberData: this.numberData },
       });
     },
-    // deleteElem() {
-    //   console.log("Delet this");
-    //   this.$emit("deleteElem", this.ind);
-    // },
   },
 };
 </script>
@@ -48,7 +55,7 @@ export default {
   justify-content: space-between;
   margin: 10px 0px;
   .input {
-    width: 40%;
+    width: 90%;
   }
 }
 </style>
