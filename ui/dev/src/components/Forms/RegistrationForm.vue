@@ -9,100 +9,43 @@
 
         <q-card-section class="card-content">
           <q-form class="q-gutter-md form" ref="registrationForm">
-            <!-- First row -->
-            <div class="form-row">
-              <!-- First Name -->
-              <q-input
-                filled
-                outlined
-                clearable
-                class="form-row-elem-2"
-                v-model="form.fname"
-                label="First Name"
-                color="primary"
-                hint="First Name: John"
-                lazy-rules
-                :rules="[emptyRule]"
-              />
-              <!-- Last Name -->
-              <q-input
-                filled
-                outlined
-                clearable
-                class="form-row-elem-2"
-                type="email"
-                v-model="form.lname"
-                label="Last Name"
-                color="primary"
-                hint="Last Name:Doe"
-                lazy-rules
-                :rules="[emptyRule]"
-              />
+            <!-- Optionals -->
+            <div>
+              <div v-for="(option,indx) in registrationOptions" :key="'inp-'+indx">
+                <!-- Tried using the render but failed hilariously -->
+                <form-input>
+                  <!-- for input fields -->
+                  <q-input
+                    v-if="option.type=='text'||option.type=='number'"
+                    filled
+                    outlined
+                    clearable
+                    :class="option.class"
+                    :type="option.type"
+                    v-model="$data[option.model]"
+                    :label="option.label"
+                    color="primary"
+                    :hint="option.hint"
+                    lazy-rules
+                    :rules="option.rules"
+                  />
+                  <q-select
+                    v-if="option.type=='dropdown'"
+                    filled
+                    outlined
+                    clearable
+                    :class="option.class"
+                    v-model="$data[option.model]"
+                    :label="option.label"
+                    color="primary"
+                    :hint="option.hint"
+                    :options="$data[option.options]"
+                    lazy-rules
+                    :rules="[ emptyRule]"
+                  />
+                </form-input>
+              </div>
             </div>
-
-            <!-- Second row -->
-            <div class="form-row">
-              <!-- Age -->
-              <q-input
-                filled
-                outlined
-                clearable
-                type="number"
-                class="form-row-elem-3"
-                v-model="form.age"
-                label="Age"
-                color="primary"
-                hint="Age: 18"
-                lazy-rules
-                :rules="[ emptyRule,ageRule]"
-              />
-              <!-- Gender -->
-              <q-select
-                filled
-                outlined
-                clearable
-                class="form-row-elem-3"
-                v-model="form.gender"
-                label="Gender"
-                color="primary"
-                hint="Gender: Male/Female/Others"
-                :options="genderOptions"
-                lazy-rules
-                :rules="[ emptyRule]"
-              />
-              <!-- Country -->
-              <q-select
-                filled
-                outlined
-                clearable
-                class="form-row-elem-3"
-                type="email"
-                v-model="form.country"
-                label="Country"
-                color="primary"
-                hint="Country: Nepal"
-                :options="countryOptions"
-                lazy-rules
-                :rules="[emptyRule]"
-              />
-            </div>
-            <!-- Contact -->
-            <q-input
-              filled
-              outlined
-              clearable
-              type="tel"
-              v-model="form.contact"
-              label="Contact number *"
-              color="primary"
-              hint="Contact Number: 986543210"
-              lazy-rules
-              :rules="[ emptyRule, contactRule]"
-            >
-              <template v-slot:prepend>
-                <q-icon name="call" color="primary" />
-              </template>
-            </q-input>
             <!-- Email -->
             <q-input
               filled
@@ -160,8 +103,24 @@
 </template>
 
 <script>
+import Vue from "vue";
 import { assetsMixin, registrationMixin } from "src/utils/mixin";
 import userService from "src/services/userService";
+import { registrationOptions } from "src/utils/constant.js";
+
+console.log(registrationOptions);
+Vue.component("form-input", {
+  render(createElement) {
+    return createElement("div", [this.$slots.default]);
+  },
+
+  props: {
+    label: { type: String },
+    hint: { type: String },
+    rules: { type: Array },
+    classVal: { type: String },
+  },
+});
 
 export default {
   mixins: [assetsMixin, registrationMixin],
@@ -179,9 +138,18 @@ export default {
         password: "",
       },
 
+      fname: "",
+      lname: "",
+      age: 0,
+      gender: "",
+      country: "",
+      contact: 0,
+
       //For the password setting component
       isOk: false,
       showWarning: false,
+
+      registrationOptions,
     };
   },
   methods: {
@@ -191,23 +159,24 @@ export default {
         let userDetails = {
           fname: this.fname,
           lname: this.lname,
-          email: this.email,
+          email: this.form.email,
           age: this.age,
           gender: this.gender,
           country: this.country,
           contact: this.contact,
-          password: this.password,
+          password: this.form.password,
         };
-        let user = await userService.userRegister(userDetails);
-        if (user.error) {
-          console.log(user.error);
-          this.$emit("setErrorMessage", user.error);
-        } else {
-          //save data to localStorage
-          localStorage.setItem("user-ext-user-id", user.id);
-          //redirecto to new page
-          // this.$router.push("/profile");
-        }
+        console.log(userDetails);
+        // let user = await userService.userRegister(userDetails);
+        // if (user.error) {
+        //   console.log(user.error);
+        //   this.$emit("setErrorMessage", user.error);
+        // } else {
+        //   //save data to localStorage
+        //   localStorage.setItem("user-ext-user-id", user.id);
+        //   //redirecto to new page
+        //   // this.$router.push("/profile");
+        // }
       }
     },
     resetDetails() {
@@ -220,7 +189,6 @@ export default {
   },
   components: {
     errorBanner: () => import("components/shared/ErrorBanner.vue"),
-
     confirmPasswordComp: () =>
       import("components/shared/ConfirmPasswordComponent.vue"),
   },

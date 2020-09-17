@@ -46,6 +46,39 @@ module.exports = function () {
       type:'confirm',
       message: "Use user-extension?",
       default:true
+    },
+    {
+      name: 'user details',
+      type: 'checkbox',
+      message: 'Check the fields you\'ll need for the user details',
+      choices: [
+        {
+          name: 'First Name',
+          value: 'fname'
+        },
+        {
+          name: 'Last Name',
+          value: 'lname'
+        },
+        {
+          name: 'Age',
+          value: 'age'
+        },
+        {
+          name: 'Gender',
+          value: 'gender'
+        },
+        {
+          name: 'Country',
+          value: 'country'
+        },
+        {
+          
+            name: 'Contact',
+            value: 'contact'
+          
+        }
+      ]
     }
   ]
 }

@@ -24,7 +24,7 @@
 <script>
 export default {
   data() {
-    return { errorMessage: "", active: "login" };
+    return { errorMessage: "", active: "register" };
   },
   components: {
     errorBanner: () => import("components/shared/ErrorBanner.vue"),
