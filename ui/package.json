@@ -47,6 +47,7 @@
   ],
   "dependencies": {
     "axios": "^0.20.0",
-    "json-server": "^0.16.1"
+    "json-server": "^0.16.1",
+    "vuelidate": "^0.7.5"
   }
 }

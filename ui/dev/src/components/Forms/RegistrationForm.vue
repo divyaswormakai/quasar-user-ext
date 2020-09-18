@@ -53,11 +53,12 @@
               clearable
               type="email"
               v-model="form.email"
+              @input='$v.form.email.$touch()'
               label="Email *"
               color="primary"
               hint="For example: johndoe@gmail.com"
               lazy-rules
-              :rules="[emptyRule,emailRule]"
+              :rules="[emptyRule,val=>$v.form.email.email||'Invalid email']"
             >
               <template v-slot:prepend>
                 <q-icon name="person" color="primary" />
@@ -68,7 +69,7 @@
               :status="isOk"
               :showWarning="showWarning"
               @changeStatus="isOk=$event"
-              @getPassword="password=$event"
+              @getPassword="form.password=$event"
             ></confirm-password-comp>
             <!-- Buttons -->
             <div class="btns">
@@ -107,6 +108,7 @@ import Vue from "vue";
 import { assetsMixin, registrationMixin } from "src/utils/mixin";
 import userService from "src/services/userService";
 import { registrationOptions } from "src/utils/constant.js";
+import {required,email} from 'vuelidate/lib/validators'
 
 console.log(registrationOptions);
 Vue.component("form-input", {
@@ -128,13 +130,7 @@ export default {
     return {
       // General info data for the user
       form: {
-        fname: "",
-        lname: "",
         email: "",
-        age: 0,
-        gender: "",
-        country: "",
-        contact: 0,
         password: "",
       },
 
@@ -192,6 +188,17 @@ export default {
     confirmPasswordComp: () =>
       import("components/shared/ConfirmPasswordComponent.vue"),
   },
+  validations:{
+    form:{
+      email:{
+        required,email
+      },
+      password:{required}
+    },
+    age:{
+      between: [18,120]
+    }
+  }
 };
 </script>
 

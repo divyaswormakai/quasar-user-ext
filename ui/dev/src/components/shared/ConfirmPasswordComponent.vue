@@ -8,8 +8,10 @@
         outlined
         v-model="newPassword.password"
         label="Password *"
+        @input='$v.newPassword.password.$touch()'
+
         lazy-rules
-        :rules="[passwordRule]"
+        :rules="[val=>$v.newPassword.password.minLength || 'Should not be less than 8 chars']"
       >
         <template v-slot:prepend>
           <q-icon name="lock" color="primary" />
@@ -32,8 +34,11 @@
         outlined
         v-model="confirmNewPassword.password"
         label="Confirm Password *"
+        @input='$v.confirmNewPassword.password.$touch()'
+
         lazy-rules
-        :rules="[passwordRule]"
+        :rules="[val=>$v.confirmNewPassword.password.minLength || 'Should not be less than 8 chars',
+                val=>$v.confirmNewPassword.password.sameAsPassword||'Doesnt match the previous']"
       >
         <template v-slot:prepend>
           <q-icon name="lock" color="primary" />
@@ -61,6 +66,7 @@
 
 <script>
 import { passwordRule } from "../../utils/rules";
+import {minLength,sameAs} from 'vuelidate/lib/validators';
 export default {
   props: {
     status: { type: Boolean },
@@ -89,9 +95,23 @@ export default {
           : true;
       this.$emit("changeStatus", toShow);
       this.$emit("getPassword", this.newPassword.password);
+      console.log(this.newPassword.password)
       return toShow;
     },
   },
+  validations:{
+    newPassword:{
+      password:{
+        minLength: minLength(8)
+      }
+    },
+    confirmNewPassword:{
+      password:{
+        minLength: minLength(8),
+        sameAsPassword: sameAs(function(){return this.newPassword.password})
+      }
+    }
+  }
 };
 </script>
 

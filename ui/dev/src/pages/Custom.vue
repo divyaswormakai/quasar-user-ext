@@ -40,7 +40,7 @@ export default {
       options: ["A", "B", "C"],
       dataFields: [{}],
       finalResults: [],
-      type: [],
+      type: [1],
     };
   },
   components: {
