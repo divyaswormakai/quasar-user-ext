@@ -58,7 +58,7 @@
               color="primary"
               hint="For example: johndoe@gmail.com"
               lazy-rules
-              :rules="[emptyRule,val=>$v.form.email.email||'Invalid email']"
+              :rules="[emptyRule, val=>$v.form.email.email||'Invalid email']"
             >
               <template v-slot:prepend>
                 <q-icon name="person" color="primary" />
@@ -111,6 +111,7 @@ import { registrationOptions } from "src/utils/constant.js";
 import {required,email} from 'vuelidate/lib/validators'
 
 console.log(registrationOptions);
+
 Vue.component("form-input", {
   render(createElement) {
     return createElement("div", [this.$slots.default]);
@@ -163,16 +164,16 @@ export default {
           password: this.form.password,
         };
         console.log(userDetails);
-        // let user = await userService.userRegister(userDetails);
-        // if (user.error) {
-        //   console.log(user.error);
-        //   this.$emit("setErrorMessage", user.error);
-        // } else {
-        //   //save data to localStorage
-        //   localStorage.setItem("user-ext-user-id", user.id);
-        //   //redirecto to new page
-        //   // this.$router.push("/profile");
-        // }
+        let user = await userService.userRegister(userDetails);
+        if (user.error) {
+          console.log(user.error);
+          this.$emit("setErrorMessage", user.error);
+        } else {
+          //save data to localStorage
+          localStorage.setItem("user-ext-user-id", user.id);
+          //redirecto to new page
+          this.$router.push("/profile");
+        }
       }
     },
     resetDetails() {

@@ -35,7 +35,8 @@ export const registrationMixin = {
       contactRule,
       genderRule,
 
-      genderOptions,countryOptions
+      genderOptions,
+      countryOptions
     }
   }
 }

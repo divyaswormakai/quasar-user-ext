@@ -1,10 +1,11 @@
 import axios from 'axios';
+import {baseUrl} from 'src/utils/constant'
 // Refine the base url
-axios.defaults.baseURL="http://localhost:3000/users"
+axios.defaults.baseURL= baseUrl;
 
 const getAllUsers = async()=>{
   try{
-    let users =await axios.get();
+    let users =await axios.get('/users');
     return users.data;
   }
   catch(err){
@@ -41,7 +42,7 @@ const userRegister = async (userDetails)=>{
     let existingUser = users.filter(user=>user.email==userDetails.email);
     if(existingUser.length<=0) {
       userDetails.id = Math.ceil( Math.random()*10000000);
-      let savedUser = await axios.post('/',userDetails);
+      let savedUser = await axios.post('/users',userDetails);
       if(savedUser){
         console.log(savedUser);
         return savedUser.data;
@@ -60,7 +61,7 @@ const userRegister = async (userDetails)=>{
 
 const userProfile = async(id)=>{
   try {
-    let user = await axios.get(`/${id}`);
+    let user = await axios.get(`/users/${id}`);
     if(user){
       return user.data;
     }
@@ -69,7 +70,6 @@ const userProfile = async(id)=>{
     }
   } catch (err) {
     return({error:err.message});
-
   }
 }
 export default{userLogin,userRegister,userProfile};

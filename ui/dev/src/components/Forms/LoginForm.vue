@@ -16,7 +16,7 @@
     <div class="right-content">
       <div class="form">
         <q-card-section>
-          <div class="text-h4 text-bold">Welcome to RasXp</div>
+          <div class="text-h4 text-bold">{{loginTitle}}</div>
         </q-card-section>
 
         <q-card-section>
@@ -95,6 +95,7 @@
 <script>
 import userService from "src/services/userService";
 import { assetsMixin, loginMixin } from "src/utils/mixin";
+import {loginTitle} from "src/utils/constant"
 
 export default {
   mixins: [assetsMixin, loginMixin],
@@ -111,6 +112,7 @@ export default {
       },
 
       showCode: false,
+      loginTitle
     };
   },
   methods: {

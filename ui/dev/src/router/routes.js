@@ -2,6 +2,7 @@ import pages from './pages'
 
 const children = pages.map(page => ({
   path: page.path,
+  name:"page.file",
   component: () => import('pages/' + page.file + '.vue')
 }))
 
