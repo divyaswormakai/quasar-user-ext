@@ -3,8 +3,8 @@
     <div class="top-row">
       <h4>User Details</h4>
       <div>
-        <q-btn label="LogOut" type="submit" color="primary" size="18px" @click="logOut" />
-        <q-btn label="Refresh" type="submit" color="primary" size="18px" @click="refresh" />
+        <q-btn flat label="LogOut" type="submit" color="primary" size="14px" @click="logOut" />
+        <q-btn label="Refresh" type="submit" color="primary" size="14px" @click="refresh" />
       </div>
     </div>
     <br />
@@ -129,23 +129,26 @@
 <script>
 import userService from "src/services/userService";
 export default {
+  props: {
+    errorMessage: { type: String },
+    successMsg: { type: String },
+  },
   async created() {
     let accessDetails = JSON.parse(
       localStorage.getItem("userExtAccessDetails")
     );
 
     if (!accessDetails) {
-      console.log("REdirect to login");
+      // console.log("REdirect to login");
       this.$router.push({ name: "Login" });
     } else {
-      this.authentication = accessDetails;
-      // console.log(this.authentication.token_type);
+      this.authentication = JSON.parse(accessDetails.value);
       // Get profile info
       let userData = await userService.userProfile(
         this.authentication.token_type,
         this.authentication.access_token
       );
-      // console.log(userData);
+
       if (userData.error) {
         console.log("error");
       } else {
@@ -153,6 +156,19 @@ export default {
         this.userDetails.email = userData.email;
       }
     }
+
+    // For checking if the session for user is finished
+    setInterval(() => {
+      let now = new Date();
+      if (localStorage.getItem("userExtAccessDetails") != null) {
+        if (
+          now.getTime() >
+          JSON.parse(localStorage.getItem("userExtAccessDetails")).expiry
+        ) {
+          localStorage.removeItem("userExtAccessDetails");
+        }
+      }
+    }, 5000 * 1000);
   },
 
   data() {
@@ -191,18 +207,27 @@ export default {
         localStorage.removeItem("userExtAccessDetails");
         this.$router.push({ name: "Login" });
       } else {
+        this.$emit("setErrorMessage", logOutStatus.error);
         console.log("Something is wrong");
       }
     },
     async refresh() {
-      console.log("REfresh");
       let renewedDetails = await userService.refreshUserToken(
         this.authentication.refresh_token,
         this.authentication.access_token
       );
       if (!renewedDetails.error) {
-        console.log("authentication changesd");
+        // console.log("authentication changesd");
+        let now = new Date();
+        let userItem = {
+          value: JSON.stringify(renewedDetails),
+          expiry: now.getTime() + renewedDetails.expires_in,
+        };
         this.authentication = renewedDetails;
+        localStorage.setItem("userExtAccessDetails", JSON.stringify(userItem));
+        this.$emit("setSuccessMessage", "Refresh token successful");
+      } else {
+        this.$emit("setErrorMessage", renewedDetails.error);
       }
     },
   },

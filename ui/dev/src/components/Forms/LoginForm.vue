@@ -99,6 +99,7 @@ import { loginTitle } from "src/utils/constant";
 
 export default {
   mixins: [assetsMixin, loginMixin],
+
   props: {
     errorMessage: { type: String },
   },
@@ -127,8 +128,15 @@ export default {
           console.log(user.error);
           this.$emit("setErrorMessage", user.error);
         } else {
-          // console.log(user);
-          localStorage.setItem("userExtAccessDetails", JSON.stringify(user));
+          let now = new Date();
+          let userItem = {
+            value: JSON.stringify(user),
+            expiry: now.getTime() + user.expires_in,
+          };
+          localStorage.setItem(
+            "userExtAccessDetails",
+            JSON.stringify(userItem)
+          );
 
           this.$router.push("/profile");
         }
