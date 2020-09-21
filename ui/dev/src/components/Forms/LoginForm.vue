@@ -95,7 +95,7 @@
 <script>
 import userService from "src/services/userService";
 import { assetsMixin, loginMixin } from "src/utils/mixin";
-import {loginTitle} from "src/utils/constant"
+import { loginTitle } from "src/utils/constant";
 
 export default {
   mixins: [assetsMixin, loginMixin],
@@ -112,21 +112,24 @@ export default {
       },
 
       showCode: false,
-      loginTitle
+      loginTitle,
     };
   },
   methods: {
     async submitForm() {
       let validation = await this.$refs.loginForm.validate();
       if (validation) {
-        let user = await userService.userLogin(this.email, this.password);
+        let user = await userService.userLogin(
+          this.form.email,
+          this.form.password
+        );
         if (user.error) {
           console.log(user.error);
           this.$emit("setErrorMessage", user.error);
         } else {
-          //save data to localStorage
-          localStorage.setItem("user-ext-user-id", user.id);
-          //redirecto to new page
+          // console.log(user);
+          localStorage.setItem("userExtAccessDetails", JSON.stringify(user));
+
           this.$router.push("/profile");
         }
       }

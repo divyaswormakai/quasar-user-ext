@@ -12,5 +12,5 @@ export const registrationOptions=[
 
  export const loginTitle= "Welcome to Rasxp"
 
- export const baseUrl = "http://localhost:3000"
+ export const baseUrl = "http://app.rasxp.com:911"
 

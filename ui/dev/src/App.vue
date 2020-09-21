@@ -1,18 +1,27 @@
 <template>
   <div id="q-app">
-        <error-banner :errorMsg="errorMessage" @clearError="errorMessage=$event"></error-banner>
-
+    <transition :enter-active-class="transitionName" v-if="true">
       <router-view />
+    </transition>
   </div>
 </template>
 
 <script>
 export default {
   name: "App",
-  // take transition from meta object
-  components: {
-    errorBanner: () => import("components/shared/ErrorBanner.vue")
-  }
+  data() {
+    return {
+      show: false,
+    };
+  },
+
+  computed: {
+    transitionName() {
+      if (this.$route.meta.transitionName) {
+        return this.$route.meta.transitionName;
+      }
+    },
+  },
 };
 </script>
 

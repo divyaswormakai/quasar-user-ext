@@ -16,19 +16,15 @@ const getAllUsers = async()=>{
 const userLogin = async(email,password)=>{
   try {
     console.log("Logging in user");
-    const users = await getAllUsers();
-    // console.log(users)
-    let user = users.filter(user=>user.email==email);
-    if(user.length>0){
-      if(user[0].password === password){
-        return user[0];
-      }
-      else{
-        throw new Error('Password was incorrect');
-      }
+    let body ={
+      username:email,password
+    }
+    const res = await axios.post('/api/login',body,{'Content-Type':'multipart/form-data', 'Access-Control-Allow-Origin':'*'});
+    if(res){
+      return res.data;
     }
     else{
-      throw new Error('Account not found. Try registering first?');
+      throw new Error("Something went wrong.");
     }
   } catch (err) {
     return({error:err.message});
@@ -59,11 +55,13 @@ const userRegister = async (userDetails)=>{
   }
 }
 
-const userProfile = async(id)=>{
+const userProfile = async(tokenType, accessToken)=>{
   try {
-    let user = await axios.get(`/users/${id}`);
-    if(user){
-      return user.data;
+    let res = await axios.get(`/api/me`,{headers:{'Authorization': tokenType+' '+accessToken, [tokenType]:accessToken}});
+    // console.log(res);
+    if(res){
+      // console.log(res.data);
+      return res.data.user;
     }
     else{
       throw new Error("User doesn't exist")
@@ -72,4 +70,38 @@ const userProfile = async(id)=>{
     return({error:err.message});
   }
 }
-export default{userLogin,userRegister,userProfile};
+
+const refreshUserToken = async(refreshToken)=>{
+  try{
+    let body = {refresh_token: refreshToken};
+    // console.log(body)
+    let res = await axios.post('/api/refresh',body);
+    if(res){
+      // console.log(res.data);
+      return res.data;
+    }
+    else{
+      throw new Error(res.error);
+    }
+  }
+  catch(err){
+    return ({error:err.message})
+  }
+}
+
+const logOutUser = async(accessToken)=>{
+  try{
+    let res = await axios.post('/api/logout',{},{headers:{ 'Content-Type':'multipart/form-data', 'Accept':'application/json','Authorization': 'Bearer '+accessToken}});
+    if(res){
+      return  res.data;
+    }
+    else{
+      throw new Error("Logging out failed");
+    }
+  }
+  catch(err){
+    return ({error:err.message})
+  }
+}
+
+export default{userLogin,userRegister,userProfile,refreshUserToken,logOutUser};

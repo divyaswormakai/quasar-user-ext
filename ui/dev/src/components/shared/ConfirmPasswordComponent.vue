@@ -8,8 +8,7 @@
         outlined
         v-model="newPassword.password"
         label="Password *"
-        @input='$v.newPassword.password.$touch()'
-
+        @input="$v.newPassword.password.$touch()"
         lazy-rules
         :rules="[val=>$v.newPassword.password.minLength || 'Should not be less than 8 chars']"
       >
@@ -34,8 +33,7 @@
         outlined
         v-model="confirmNewPassword.password"
         label="Confirm Password *"
-        @input='$v.confirmNewPassword.password.$touch()'
-
+        @input="$v.confirmNewPassword.password.$touch()"
         lazy-rules
         :rules="[val=>$v.confirmNewPassword.password.minLength || 'Should not be less than 8 chars',
                 val=>$v.confirmNewPassword.password.sameAsPassword||'Doesnt match the previous']"
@@ -66,7 +64,7 @@
 
 <script>
 import { passwordRule } from "../../utils/rules";
-import {minLength,sameAs} from 'vuelidate/lib/validators';
+import { minLength, sameAs } from "vuelidate/lib/validators";
 export default {
   props: {
     status: { type: Boolean },
@@ -88,30 +86,30 @@ export default {
   },
   computed: {
     checkStatus() {
-      console.log("checking status");
       let toShow =
         this.newPassword.password == this.confirmNewPassword.password
           ? false
           : true;
       this.$emit("changeStatus", toShow);
       this.$emit("getPassword", this.newPassword.password);
-      console.log(this.newPassword.password)
       return toShow;
     },
   },
-  validations:{
-    newPassword:{
-      password:{
-        minLength: minLength(8)
-      }
-    },
-    confirmNewPassword:{
-      password:{
+  validations: {
+    newPassword: {
+      password: {
         minLength: minLength(8),
-        sameAsPassword: sameAs(function(){return this.newPassword.password})
-      }
-    }
-  }
+      },
+    },
+    confirmNewPassword: {
+      password: {
+        minLength: minLength(8),
+        sameAsPassword: sameAs(function () {
+          return this.newPassword.password;
+        }),
+      },
+    },
+  },
 };
 </script>
 

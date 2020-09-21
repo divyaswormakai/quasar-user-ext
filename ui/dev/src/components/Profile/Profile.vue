@@ -1,6 +1,12 @@
 <template>
   <div class="profile-content">
-    <h4>User Details</h4>
+    <div class="top-row">
+      <h4>User Details</h4>
+      <div>
+        <q-btn label="LogOut" type="submit" color="primary" size="18px" @click="logOut" />
+        <q-btn label="Refresh" type="submit" color="primary" size="18px" @click="refresh" />
+      </div>
+    </div>
     <br />
     <hr />
     <div class="user-profile">
@@ -123,24 +129,42 @@
 <script>
 import userService from "src/services/userService";
 export default {
-  async beforeMount() {
-    let id = localStorage.getItem("user-ext-user-id");
-    console.log(id);
-    let user = await userService.userProfile(id);
-    console.log(user);
-    delete user.password;
-    this.userDetails = user;
+  async created() {
+    let accessDetails = JSON.parse(
+      localStorage.getItem("userExtAccessDetails")
+    );
+
+    if (!accessDetails) {
+      console.log("REdirect to login");
+      this.$router.push({ name: "Login" });
+    } else {
+      this.authentication = accessDetails;
+      // console.log(this.authentication.token_type);
+      // Get profile info
+      let userData = await userService.userProfile(
+        this.authentication.token_type,
+        this.authentication.access_token
+      );
+      // console.log(userData);
+      if (userData.error) {
+        console.log("error");
+      } else {
+        this.userDetails.fname = userData.name;
+        this.userDetails.email = userData.email;
+      }
+    }
   },
+
   data() {
     return {
       userDetails: {
         fname: "",
-        lname: "",
-        country: "",
-        age: 0,
-        gender: "",
+        lname: " ",
+        country: "NP",
+        age: 12,
+        gender: "---",
         email: "",
-        contact: "",
+        contact: "0000000",
       },
       imageSrc: "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
       oldPassword: {
@@ -149,13 +173,40 @@ export default {
       },
       isOk: false,
       showWarning: true,
+      authentication: {},
     };
   },
+
   methods: {
     savePassword() {
       console.log("Password");
     },
+    async logOut() {
+      let logOutStatus = await userService.logOutUser(
+        this.authentication.access_token
+      );
+      console.log(logOutStatus);
+      if (logOutStatus == "Logged Out") {
+        console.log("Logging out continued");
+        localStorage.removeItem("userExtAccessDetails");
+        this.$router.push({ name: "Login" });
+      } else {
+        console.log("Something is wrong");
+      }
+    },
+    async refresh() {
+      console.log("REfresh");
+      let renewedDetails = await userService.refreshUserToken(
+        this.authentication.refresh_token,
+        this.authentication.access_token
+      );
+      if (!renewedDetails.error) {
+        console.log("authentication changesd");
+        this.authentication = renewedDetails;
+      }
+    },
   },
+
   components: {
     confirmPasswordComp: () =>
       import("components/shared/ConfirmPasswordComponent.vue"),
@@ -164,7 +215,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../css/quasar.mixin.scss';
+@import "../../css/quasar.mixin.scss";
 
 p {
   font-size: 20px;
@@ -172,6 +223,10 @@ p {
 
 .profile-content {
   margin: 20px 50px;
+}
+.top-row {
+  @include flexCenter(space-between, center);
+  flex-direction: row;
 }
 
 .user-profile {
@@ -187,13 +242,13 @@ p {
     flex-direction: column;
     .user-details-row {
       padding: 10px 20px;
-      @include flexCenter(space-between,center);
+      @include flexCenter(space-between, center);
       flex-direction: row;
     }
   }
   .user-pic {
     width: 60%;
-    @include flexCenter(center,center);
+    @include flexCenter(center, center);
     img {
       height: 300px;
       width: 300px;

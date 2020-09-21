@@ -53,7 +53,7 @@
               clearable
               type="email"
               v-model="form.email"
-              @input='$v.form.email.$touch()'
+              @input="$v.form.email.$touch()"
               label="Email *"
               color="primary"
               hint="For example: johndoe@gmail.com"
@@ -108,9 +108,7 @@ import Vue from "vue";
 import { assetsMixin, registrationMixin } from "src/utils/mixin";
 import userService from "src/services/userService";
 import { registrationOptions } from "src/utils/constant.js";
-import {required,email} from 'vuelidate/lib/validators'
-
-console.log(registrationOptions);
+import { required, email } from "vuelidate/lib/validators";
 
 Vue.component("form-input", {
   render(createElement) {
@@ -189,17 +187,18 @@ export default {
     confirmPasswordComp: () =>
       import("components/shared/ConfirmPasswordComponent.vue"),
   },
-  validations:{
-    form:{
-      email:{
-        required,email
+  validations: {
+    form: {
+      email: {
+        required,
+        email,
       },
-      password:{required}
+      password: { required },
     },
-    age:{
-      between: [18,120]
-    }
-  }
+    age: {
+      between: [18, 120],
+    },
+  },
 };
 </script>
 
