@@ -150,7 +150,7 @@ export default {
       );
 
       if (userData.error) {
-        console.log("error");
+        console.log(userData.error);
       } else {
         this.userDetails.fname = userData.name;
         this.userDetails.email = userData.email;

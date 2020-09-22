@@ -11,17 +11,6 @@ const rimraf = require('rimraf')
 
 module.exports = function (api) {
 
-
-  if (api.prompts.serviceA) {
-    // we added it on install, so we remove it
-    rimraf.sync(api.resolve.src('services/serviceA.js'))
-  }
-
-  if (api.prompts.serviceB) {
-    // we added it on install, so we remove it
-    rimraf.sync(api.resolve.src('services/serviceB.js'))
-  }
-
   // we added it on install, so we remove it
   rimraf.sync(api.resolve.app('some-folder'))
   // warning... we've added this folder, but what if the

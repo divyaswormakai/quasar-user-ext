@@ -15,6 +15,10 @@ export default {
     };
   },
 
+  beforeUpdate() {
+    // console.log(this.$route);
+  },
+
   computed: {
     transitionName() {
       if (this.$route.meta.transitionName) {

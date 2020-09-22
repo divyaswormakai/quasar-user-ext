@@ -17,15 +17,7 @@ module.exports = function (api) {
 	api.compatibleWith('quasar', '^1.0.0')
 	api.compatibleWith('@quasar/app', '^1.0.0')
 
-	if(api.prompts.serviceA){
-		api.render('./tempaltes/serviceA')
-	}
 
-	if(api.prompts.serviceB){
-		api.render('./templates/serviceB', {
-			productName: api.prompts.productName
-		  })
-	}
 
 	api.render('./templates/common-files')
 }

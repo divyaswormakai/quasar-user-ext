@@ -12,7 +12,8 @@
   "bugs": "",
   "homepage": "",
   "dependencies": {
-    "quasar-ui-user-ext": "latest"
+    "quasar-ui-user-ext": "^0.0.1",
+    "rimraf": "^3.0.2"
   },
   "engines": {
     "node": ">= 8.9.0",
