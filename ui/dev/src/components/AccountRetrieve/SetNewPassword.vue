@@ -14,7 +14,7 @@
         <confirm-password-comp
           :status="isOk"
           :showWarning="showWarning"
-          @changeStatus="isOk=$event"
+          @changeStatus="isOk = $event"
         ></confirm-password-comp>
         <!-- Buttons -->
         <div class="btns">
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import logo from "assets/rasello.png";
+import logo from "../../assets/rasello.png";
 
 export default {
   data() {
@@ -51,17 +51,16 @@ export default {
     },
   },
   components: {
-    confirmPasswordComp: () =>
-      import("components/shared/ConfirmPasswordComponent.vue"),
+    confirmPasswordComp: () => import("../shared/ConfirmPasswordComponent.vue"),
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import '../../css/quasar.mixin.scss';
+@import "../../css/quasar.mixin.scss";
 
 .set-password {
-  @include flexCenter(center,center);
+  @include flexCenter(center, center);
   height: 90vh;
   padding: 20px 50px;
   max-width: 100%;
@@ -69,7 +68,7 @@ export default {
     display: flex;
     min-width: 60%;
     .title {
-      @include flexCenter(center,center);
+      @include flexCenter(center, center);
       flex-direction: column;
       width: 60%;
       img {
@@ -79,7 +78,7 @@ export default {
     }
     .content {
       padding: 0px;
-      @include flexCenter(center,center);
+      @include flexCenter(center, center);
       flex-direction: column;
       height: 60vh;
       width: 100%;

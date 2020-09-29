@@ -69,7 +69,7 @@ export default {
 
 ## UMD variant
 
-Exports `window.camelCased`.
+Exports `window.global	`.
 
 Add the following tag(s) after the Quasar ones:
 

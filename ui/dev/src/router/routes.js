@@ -3,7 +3,7 @@ import pages from './pages'
 const children = pages.map(page => ({
   path: page.path,
   name: page.file,
-  component: () => import('pages/' + page.file + '.vue'),
+  component: () => import('./../pages/' + page.file + '.vue'),
   meta:{},
   beforeEnter:((to,form,next)=>{
     if(to.path.toString().includes('login')){
@@ -19,9 +19,9 @@ const children = pages.map(page => ({
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MyLayout.vue'),
+    component: () => import('./../layouts/MyLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '', component: () => import('./../pages/Index.vue') }
     ].concat(children)
   }
 ]

@@ -3,8 +3,8 @@
     <transition enter-active-class="animate__animated animate__slideInLeft">
       <registration-form
         :errorMsg="errorMessage"
-        @setErrorMessage="errorMessage=$event"
-        @changeActiveForm="active=$event"
+        @setErrorMessage="errorMessage = $event"
+        @changeActiveForm="active = $event"
       ></registration-form>
     </transition>
   </div>
@@ -12,13 +12,13 @@
 
 
 <script>
-import RegistrationForm from "components/Forms/RegistrationForm.vue"
+import RegistrationForm from "../components/Forms/RegistrationForm.vue";
 export default {
   data() {
-    return { errorMessage: ""};
+    return { errorMessage: "" };
   },
   components: {
-    errorBanner: () => import("components/shared/ErrorBanner.vue"),
+    errorBanner: () => import("../components/shared/ErrorBanner.vue"),
     RegistrationForm,
   },
 };

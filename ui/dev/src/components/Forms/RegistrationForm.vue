@@ -1,7 +1,13 @@
 <template>
   <div class="registration-form">
     <div class="login-link">
-      <q-btn flat color="primary" label="Sign In" @click="changeForm" icon="arrow_back" />
+      <q-btn
+        flat
+        color="primary"
+        label="Sign In"
+        @click="changeForm"
+        icon="arrow_back"
+      />
     </div>
     <div class="left-content">
       <div class="card">
@@ -11,12 +17,15 @@
           <q-form class="q-gutter-md form" ref="registrationForm">
             <!-- Optionals -->
             <div>
-              <div v-for="(option,indx) in registrationOptions" :key="'inp-'+indx">
+              <div
+                v-for="(option, indx) in registrationOptions"
+                :key="'inp-' + indx"
+              >
                 <!-- Tried using the render but failed hilariously -->
                 <form-input>
                   <!-- for input fields -->
                   <q-input
-                    v-if="option.type=='text'||option.type=='number'"
+                    v-if="option.type == 'text' || option.type == 'number'"
                     filled
                     outlined
                     clearable
@@ -30,7 +39,7 @@
                     :rules="option.rules"
                   />
                   <q-select
-                    v-if="option.type=='dropdown'"
+                    v-if="option.type == 'dropdown'"
                     filled
                     outlined
                     clearable
@@ -41,7 +50,7 @@
                     :hint="option.hint"
                     :options="$data[option.options]"
                     lazy-rules
-                    :rules="[ emptyRule]"
+                    :rules="[emptyRule]"
                   />
                 </form-input>
               </div>
@@ -58,7 +67,10 @@
               color="primary"
               hint="For example: johndoe@gmail.com"
               lazy-rules
-              :rules="[emptyRule, val=>$v.form.email.email||'Invalid email']"
+              :rules="[
+                emptyRule,
+                (val) => $v.form.email.email || 'Invalid email',
+              ]"
             >
               <template v-slot:prepend>
                 <q-icon name="person" color="primary" />
@@ -68,8 +80,8 @@
             <confirm-password-comp
               :status="isOk"
               :showWarning="showWarning"
-              @changeStatus="isOk=$event"
-              @getPassword="form.password=$event"
+              @changeStatus="isOk = $event"
+              @getPassword="form.password = $event"
             ></confirm-password-comp>
             <!-- Buttons -->
             <div class="btns">
@@ -105,9 +117,9 @@
 
 <script>
 import Vue from "vue";
-import { assetsMixin, registrationMixin } from "src/utils/mixin";
-import userService from "src/services/userService";
-import { registrationOptions } from "src/utils/constant.js";
+import { assetsMixin, registrationMixin } from "../../utils/mixin";
+import userService from "../../services/userService";
+import { registrationOptions } from "../../utils/constant.js";
 import { required, email } from "vuelidate/lib/validators";
 
 Vue.component("form-input", {
@@ -183,9 +195,8 @@ export default {
     },
   },
   components: {
-    errorBanner: () => import("components/shared/ErrorBanner.vue"),
-    confirmPasswordComp: () =>
-      import("components/shared/ConfirmPasswordComponent.vue"),
+    errorBanner: () => import("../shared/ErrorBanner.vue"),
+    confirmPasswordComp: () => import("../shared/ConfirmPasswordComponent.vue"),
   },
   validations: {
     form: {

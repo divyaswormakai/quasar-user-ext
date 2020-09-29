@@ -58,7 +58,7 @@ const builds = [
         input: pathResolve('entry/index.umd.js')
       },
       output: {
-        name: 'camelCased',
+        name: 'global	',
         file: pathResolve('../dist/index.umd.js'),
         format: 'umd'
       }
@@ -107,7 +107,7 @@ function addAssets (builds, type, injectName) {
           output: {
             file: addExtension(pathResolve(`../dist/${type}/${file}`), 'umd'),
             format: 'umd',
-            name: `camelCased.${injectName}.${name}`
+            name: `global	.${injectName}.${name}`
           }
         },
         build: {

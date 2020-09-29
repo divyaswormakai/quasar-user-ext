@@ -1,0 +1,9 @@
+ext/ui: yarn build
+	yarn install
+ext/app-extension: change path to absolute path using \\
+		   yarn install
+
+test-app: yarn add --dev linktofileof app-extension
+	  //yarn add --dev linktofileof ui
+	  quasar ext invoke my-ext
+	  yarn install

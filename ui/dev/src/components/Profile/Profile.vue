@@ -3,8 +3,21 @@
     <div class="top-row">
       <h4>User Details</h4>
       <div>
-        <q-btn flat label="LogOut" type="submit" color="primary" size="14px" @click="logOut" />
-        <q-btn label="Refresh" type="submit" color="primary" size="14px" @click="refresh" />
+        <q-btn
+          flat
+          label="LogOut"
+          type="submit"
+          color="primary"
+          size="14px"
+          @click="logOut"
+        />
+        <q-btn
+          label="Refresh"
+          type="submit"
+          color="primary"
+          size="14px"
+          @click="refresh"
+        />
       </div>
     </div>
     <br />
@@ -18,7 +31,7 @@
           <div class="row-elem">
             <label for="name">Full Name</label>
             <p>
-              <b>{{userDetails.fname+" "+userDetails.lname}}</b>
+              <b>{{ userDetails.fname + " " + userDetails.lname }}</b>
             </p>
           </div>
         </div>
@@ -28,21 +41,21 @@
           <div class="row-elem">
             <label for="country">Country</label>
             <p>
-              <b>{{userDetails.country}}</b>
+              <b>{{ userDetails.country }}</b>
             </p>
           </div>
           <!-- Gender -->
           <div class="row-elem">
             <label for="gender">Gender</label>
             <p>
-              <b>{{userDetails.gender}}</b>
+              <b>{{ userDetails.gender }}</b>
             </p>
           </div>
           <!-- Age -->
           <div class="row-elem">
             <label for="age">Age</label>
             <p>
-              <b>{{userDetails.age}}</b>
+              <b>{{ userDetails.age }}</b>
             </p>
           </div>
         </div>
@@ -51,7 +64,7 @@
           <div class="row-elem">
             <label for="name">Contact Details</label>
             <p>
-              <b>{{userDetails.contact}}</b>
+              <b>{{ userDetails.contact }}</b>
             </p>
           </div>
         </div>
@@ -60,7 +73,7 @@
           <div class="row-elem">
             <label for="name">Email</label>
             <p>
-              <b>{{userDetails.email}}</b>
+              <b>{{ userDetails.email }}</b>
             </p>
           </div>
         </div>
@@ -68,7 +81,10 @@
       <!-- Second column of user picture -->
       <div class="user-pic">
         <div>
-          <img src="https://homepages.cae.wisc.edu/~ece533/images/boat.png" spinner-color="white" />
+          <img
+            src="https://homepages.cae.wisc.edu/~ece533/images/boat.png"
+            spinner-color="white"
+          />
         </div>
       </div>
     </div>
@@ -103,13 +119,13 @@
           <confirm-password-comp
             :status="isOk"
             :showWarning="showWarning"
-            @changeStatus="isOk=$event"
-            v-show="oldPassword.password.length>0"
+            @changeStatus="isOk = $event"
+            v-show="oldPassword.password.length > 0"
           ></confirm-password-comp>
         </div>
 
         <!-- Change password status -->
-        <div class="column btns" v-show="oldPassword.password.length>0">
+        <div class="column btns" v-show="oldPassword.password.length > 0">
           <q-btn
             rounded
             label="Save"
@@ -127,7 +143,7 @@
 </template>
 
 <script>
-import userService from "src/services/userService";
+import userService from "../../services/userService";
 export default {
   props: {
     errorMessage: { type: String },
@@ -234,7 +250,7 @@ export default {
 
   components: {
     confirmPasswordComp: () =>
-      import("components/shared/ConfirmPasswordComponent.vue"),
+      import("./../shared/ConfirmPasswordComponent.vue"),
   },
 };
 </script>

@@ -1,10 +1,10 @@
-import logo from "assets/rasello.png";
-import background from "assets/login-bg.png";
-import qr from "assets/qrcode.png";
+import logo from "./../assets/rasello.png";
+import background from "./../assets/login-bg.png";
+import qr from "./../assets/qrcode.png";
 
-import { emailRule, emptyRule, passwordRule,ageRule, contactRule,genderRule } from "src/utils/rules";
+import { emailRule, emptyRule, passwordRule,ageRule, contactRule,genderRule } from "./rules";
 
-import {registrationOptions} from './constant.js';
+// import {registrationOptions} from './constant.js';
 
 const genderOptions=["Male", "Female", "Others"];
 const countryOptions= ["Nepal", "India", "China", "Bhutan", "Pakistan"];

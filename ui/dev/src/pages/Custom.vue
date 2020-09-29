@@ -1,23 +1,23 @@
 <template>
   <div class="content">
-    <div v-for="(dataField,indx) in dataFields" :key="'comp'+indx">
+    <div v-for="(dataField, indx) in dataFields" :key="'comp' + indx">
       <element-comp
-        v-if="type[indx]==1"
+        v-if="type[indx] == 1"
         :ind="indx"
-        @setValues="placeValue($event,indx)"
+        @setValues="placeValue($event, indx)"
         @deleteElem="deleteElem($event)"
       ></element-comp>
       <second-comp
-        v-if="type[indx]==2"
+        v-if="type[indx] == 2"
         :ind="indx"
-        @setValues="placeValue($event,indx)"
+        @setValues="placeValue($event, indx)"
         @deleteElem="deleteElem($event)"
       ></second-comp>
       <drop-comp
-        v-if="type[indx]==3"
+        v-if="type[indx] == 3"
         :ind="indx"
         :options="options"
-        @setValues="placeValue($event,indx)"
+        @setValues="placeValue($event, indx)"
         @deleteElem="deleteElem($event)"
       ></drop-comp>
     </div>
@@ -29,7 +29,7 @@
     <q-btn label="Submit" color="secondary" @click="showResult" />
     <q-btn color="negative" flat label="Delete last" @click="deleteElem" />
 
-    <p v-for="(value,ind) in finalResults" :key="'final'+ind">{{value}}</p>
+    <p v-for="(value, ind) in finalResults" :key="'final' + ind">{{ value }}</p>
   </div>
 </template>
 
@@ -44,9 +44,9 @@ export default {
     };
   },
   components: {
-    elementComp: () => import("components/Custom/Element.vue"),
-    secondComp: () => import("components/Custom/NumberElement.vue"),
-    dropComp: () => import("components/Custom/DropdownElem.vue"),
+    elementComp: () => import("../components/Custom/Element.vue"),
+    secondComp: () => import("../components/Custom/NumberElement.vue"),
+    dropComp: () => import("../components/Custom/DropdownElem.vue"),
   },
   methods: {
     addNewComp(type) {

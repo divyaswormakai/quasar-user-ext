@@ -1,4 +1,4 @@
-import httpClient from 'src/utils/axiosprops';
+import httpClient from '../utils/axiosprops';
 
 const getAllUsers = async()=>{
   try{

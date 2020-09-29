@@ -8,7 +8,10 @@
 
 <script>
 export default {
-  name: "App",
+  name: "AppDev",
+  created() {
+    console.log("CREATED");
+  },
   data() {
     return {
       show: false,

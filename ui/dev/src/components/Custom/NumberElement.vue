@@ -1,7 +1,7 @@
 <template>
-  <div :class="'element'+ind">
+  <div :class="'element' + ind">
     <div class="element">
-      {{ind+1}}
+      {{ ind + 1 }}
       <q-input
         filled
         outlined
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { emptyRule } from "src/utils/rules";
+import { emptyRule } from "../../utils/rules";
 export default {
   created() {
     console.log("Created");

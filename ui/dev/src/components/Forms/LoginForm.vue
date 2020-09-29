@@ -3,11 +3,17 @@
     <div class="qr-code-content" v-show="showCode">
       <div class="qr-code">
         <img :src="qr" alt="qr-code" />
-        <q-btn flat color="primary" label="Cancel" @click="showCode=false" />
+        <q-btn flat color="primary" label="Cancel" @click="showCode = false" />
       </div>
     </div>
     <div class="register-link">
-      <q-btn flat color="primary" label="Sign Up" @click="changeForm" icon-right="arrow_forward" />
+      <q-btn
+        flat
+        color="primary"
+        label="Sign Up"
+        @click="changeForm"
+        icon-right="arrow_forward"
+      />
     </div>
     <div class="left-content">
       <img :src="background" alt="Bg Img" id="bg" />
@@ -16,7 +22,7 @@
     <div class="right-content">
       <div class="form">
         <q-card-section>
-          <div class="text-h4 text-bold">{{loginTitle}}</div>
+          <div class="text-h4 text-bold">{{ loginTitle }}</div>
         </q-card-section>
 
         <q-card-section>
@@ -32,7 +38,7 @@
                 v-model="form.email"
                 hint="For example: johndoe@gmail.com"
                 lazy-rules
-                :rules="[emptyRule,emailRule]"
+                :rules="[emptyRule, emailRule]"
               >
                 <template v-slot:prepend>
                   <q-icon name="person" class="icon" />
@@ -65,7 +71,12 @@
             </div>
 
             <div class="row">
-              <q-checkbox v-model="form.rememberMe" color="primary" id="checkbox">Remember Me</q-checkbox>
+              <q-checkbox
+                v-model="form.rememberMe"
+                color="primary"
+                id="checkbox"
+                >Remember Me</q-checkbox
+              >
               <a href="/account-retrieve">Forgot Password?</a>
             </div>
 
@@ -84,7 +95,14 @@
       </div>
       <div class="scan">
         <div>
-          <q-btn flat round color="primary" icon="qr_code_scanner" id="btn" @click="showCode=true" />
+          <q-btn
+            flat
+            round
+            color="primary"
+            icon="qr_code_scanner"
+            id="btn"
+            @click="showCode = true"
+          />
           <p>SCAN</p>
         </div>
       </div>
@@ -93,9 +111,9 @@
 </template>
 
 <script>
-import userService from "src/services/userService";
-import { assetsMixin, loginMixin } from "src/utils/mixin";
-import { loginTitle } from "src/utils/constant";
+import userService from "../../services/userService";
+import { assetsMixin, loginMixin } from "../../utils/mixin";
+import { loginTitle } from "../../utils/constant";
 
 export default {
   mixins: [assetsMixin, loginMixin],
@@ -137,7 +155,7 @@ export default {
             "userExtAccessDetails",
             JSON.stringify(userItem)
           );
-
+          console.log("Logged in ");
           this.$router.push("/profile");
         }
       }
@@ -228,7 +246,7 @@ export default {
       width: 100px;
       right: 0px;
       bottom: 0px;
-      background: $primaryFaded;
+      background: #e2f1fb;
       border-radius: 100% 0 0 0;
       div {
         @include flexCenter(space-between, center);

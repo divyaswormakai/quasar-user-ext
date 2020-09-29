@@ -5,8 +5,12 @@
       leave-active-class="animate__animated animate__fadeOut animate__faster"
       mode="in-out"
     >
-      <q-banner inline-actions class="text-white bg-green" v-show="successMsg.length>0">
-        {{successMsg}}
+      <q-banner
+        inline-actions
+        class="text-white bg-green"
+        v-show="successMsg.length > 0"
+      >
+        {{ successMsg }}
         <template v-slot:action>
           <q-btn flat color="white" icon="clear" @click="deleteMsg" />
         </template>

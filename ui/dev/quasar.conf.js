@@ -8,8 +8,7 @@ module.exports = function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     boot: [
-      'register.js',
-      'vuelidate.js'
+      'register.js'
     ],
 
     css: [
@@ -52,7 +51,7 @@ module.exports = function (ctx) {
 
       chainWebpack (chain) {
         chain.resolve.alias.merge({
-          'ui': path.resolve(__dirname, '../src/index.js'),
+          'ui': path.resolve(__dirname, '../src/index.js')
         })
       }
     },

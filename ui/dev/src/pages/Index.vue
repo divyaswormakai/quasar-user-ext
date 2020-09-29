@@ -1,5 +1,5 @@
 <template>
-  <q-page padding class="row justify-center">
+  <div padding class="row justify-center">
     <q-list dense class="list">
       <div class="text-h4 q-mb-md">Test pages</div>
       <q-item v-for="page in pages" :key="page.path" :to="page.path">
@@ -12,11 +12,11 @@
         </q-item-section>
       </q-item>
     </q-list>
-  </q-page>
+  </div>
 </template>
 
 <script>
-import pages from "src/router/pages";
+import pages from "../router/pages";
 
 export default {
   created() {

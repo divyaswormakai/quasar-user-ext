@@ -1,20 +1,23 @@
 <template>
   <div>
-    <error-banner :errorMsg="errorMessage" @clearError="errorMessage=$event"></error-banner>
+    <error-banner
+      :errorMsg="errorMessage"
+      @clearError="errorMessage = $event"
+    ></error-banner>
     <transition enter-active-class="animate__animated animate__slideInRight">
       <login-form
         :errorMsg="errorMessage"
-        @setErrorMessage="errorMessage=$event"
-        @changeActiveForm="active=$event"
-        v-if="active=='login'"
+        @setErrorMessage="errorMessage = $event"
+        @changeActiveForm="active = $event"
+        v-if="active == 'login'"
       ></login-form>
     </transition>
     <transition enter-active-class="animate__animated animate__slideInLeft">
       <registration-form
         :errorMsg="errorMessage"
-        @setErrorMessage="errorMessage=$event"
-        @changeActiveForm="active=$event"
-        v-if="active=='register'"
+        @setErrorMessage="errorMessage = $event"
+        @changeActiveForm="active = $event"
+        v-if="active == 'register'"
       ></registration-form>
     </transition>
   </div>
@@ -27,9 +30,9 @@ export default {
     return { errorMessage: "", active: "register" };
   },
   components: {
-    errorBanner: () => import("components/shared/ErrorBanner.vue"),
-    loginForm: () => import("components/Forms/LoginForm.vue"),
-    registrationForm: () => import("components/Forms/RegistrationForm.vue"),
+    errorBanner: () => import("../components/shared/ErrorBanner.vue"),
+    loginForm: () => import("../components/Forms/LoginForm.vue"),
+    registrationForm: () => import("../components/Forms/RegistrationForm.vue"),
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div :class="'element'+ind">
+  <div :class="'element' + ind">
     <div class="element">
       <q-select
         filled
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { emptyRule } from "src/utils/rules";
+import { emptyRule } from "../../utils/rules";
 export default {
   created() {
     console.log("Created");

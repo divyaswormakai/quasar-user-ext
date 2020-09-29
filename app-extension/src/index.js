@@ -9,31 +9,17 @@
 function extendConf (conf) {
   // register our boot file
   conf.boot.push('~quasar-app-extension-user-ext/src/boot/register.js')
+  // conf.boot.push('~quasar-ui-user-ext/dev/src/boot/register.js')
 
   // make sure app extension files & ui package gets transpiled
   conf.build.transpileDependencies.push(/quasar-app-extension-user-ext[\\/]src/)
+  // conf.build.transpileDependencies.push(/quasar-ui-user-ext[\\/]src/)
+  // conf.build.transpileDependencies.push(/quasar-ui-user-ext[\\/]dev[\\/]src/)
 
   // make sure the stylesheet goes through webpack to avoid SSR issues
-  conf.css.push('~quasar-ui-user-ext/src/index.sass')
+  // conf.css.push('/quasar-ui-user-ext/src/index.sass')
+
 }
-
-function onPublish (api, { arg, distDir }) {
-  // this hook is called when "quasar build --publish" is called
-
-  // your publish logic here...
-  console.log('We should publish now. But maybe later? :)')
-
-  // are we trying to publish a Cordova app?
-  if (api.ctx.modeName === 'cordova') {
-    // do something
-  }
-}
-
-function chainWebpack (cfg, { isClient, isServer }, api) {
-  // cfg is a Webpack chain Object;
-  // docs on how to use it: webpack-chain docs (https://github.com/neutrinojs/webpack-chain)
-}
-
 module.exports = function (api) {
   // Quasar compatibility check; you may need
   // hard dependencies, as in a minimum version of the "quasar"
@@ -46,10 +32,4 @@ module.exports = function (api) {
 
   // We extend /quasar.conf.js
   api.extendQuasarConf(extendConf)
-
-  if(api.prompts.publishService){
-    api.onPublish(onPublish)
-  }
-
-  api.chainWebpack(chainWebpack)
 }
